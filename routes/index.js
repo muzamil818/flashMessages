@@ -11,11 +11,11 @@ router.get("/", function (req, res, next) {
 
 router.get("/create", async function (req, res) {
   const userData = await users.create({
-    username: "muzamili",
+    username: "usman",
     nickname: "halo",
     discription: "you are talking with zaid nashai",
 
-    catagory: ["ciggrete", "velo", "naswat"],
+    catagory: ["ciggrete", "velo", "amna"],
   });
 
   res.send(userData)
@@ -27,9 +27,16 @@ router.get("/create", async function (req, res) {
 //   res.send(find)
 // })
 router.get("/find", async function(req, res){
-let regex = new RegExp ("^Muzamil$", "i")
-  const find = await users.find({username: regex});
-
+  // let regex = new RegExp ("^Muzamil$", "i")
+  const find = await users.find();
+  
+  res.send(find)
+})
+router.get("/specific", async function(req, res){
+  let date1 = new Date("2025-08-12")
+  let date2 = new Date("2025-08-15")
+  // const find = await users.find({catagory :{ $all: ["velo", "amna" ]}});
+  const find = await users.find({datecreated: {$gte: date1, $lte: date2}})
   res.send(find)
 })
 // router.get('/faild', function(req, res) {
