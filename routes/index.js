@@ -32,11 +32,25 @@ router.get("/find", async function(req, res){
   
   res.send(find)
 })
+// router.get("/specific", async function(req, res){
+//   let date1 = new Date("2025-08-12")
+//   let date2 = new Date("2025-08-15")
+//   // const find = await users.find({catagory :{ $all: ["velo", "amna" ]}});
+//   const find = await users.find({datecreated: {$gte: date1, $lte: date2}})
+//   res.send(find)
+// })
 router.get("/specific", async function(req, res){
-  let date1 = new Date("2025-08-12")
-  let date2 = new Date("2025-08-15")
-  // const find = await users.find({catagory :{ $all: ["velo", "amna" ]}});
-  const find = await users.find({datecreated: {$gte: date1, $lte: date2}})
+
+
+  const find = await users.find({
+    $expr: {
+    $and :  [
+      {$gte: [{$strLenCP: "$nickname"}, 0]},
+      {$lte : [{$strLenCP: "$nickname"},2]}
+    ]
+
+
+}})
   res.send(find)
 })
 // router.get('/faild', function(req, res) {
